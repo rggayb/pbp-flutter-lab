@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 Future<List<MyWatchlist>> fetchWatchlist() async {
-  var url = Uri.parse('https://tugas-2-pbp-rifqi.herokuapp.com/mywatchlist/json/');
+  var url = Uri.parse('https://mocki.io/v1/6b03a0fe-94ad-4e1e-a144-d3bc170792d0');
   var response = await http.get(
     url,
     headers: {
