@@ -1,9 +1,10 @@
+// ignore: unused_import
 import 'package:counter_7/main.dart';
-import 'package:counter_7/data.dart';
+import 'package:counter_7/page/data_budget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:counter_7/drawer.dart';
-import 'global.dart' as globals;
+import 'package:counter_7/widgets/drawer.dart';
+import '../model/global.dart' as globals;
 
 class MyBudgetFormPage extends StatefulWidget {
   const MyBudgetFormPage({super.key});
@@ -16,23 +17,28 @@ class Budget {
   late String judul;
   late int nominal;
   late String jenisBudget;
-  late DateTime date;
+  late DateTime tanggal;
 
   Budget(
-      {required this.judul, required this.nominal, required this.jenisBudget, required this.date});
+      {
+        required this.judul, 
+        required this.nominal, 
+        required this.jenisBudget, 
+        required this.tanggal,
+        });
 }
 
 class _TambahBudgetPageState extends State<MyBudgetFormPage> {
   final _formKey = GlobalKey<FormState>();
-  String? _judul;
+  String? judul;
   int? nominal;
   String? jenisBudget;
   List<String> listJenisBudget = ['Pemasukan', 'Pengeluaran'];
-  DateTime date = DateTime.now();
+  DateTime tanggal = DateTime.now();
 
   onPressed(BuildContext context) {
     var data =
-        Budget(judul: _judul!, nominal: nominal!, jenisBudget: jenisBudget!, date: date);
+        Budget(judul: judul!, nominal: nominal!, jenisBudget: jenisBudget!, tanggal: tanggal);
     globals.budgets.add(data);
     Navigator.pushReplacement(
       context,
@@ -59,7 +65,7 @@ class _TambahBudgetPageState extends State<MyBudgetFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      hintText: "Beli barang X",
+                      hintText: "Beli Baju",
                       labelText: "Judul",
                       // Menambahkan circular border agar lebih rapi
                       border: OutlineInputBorder(
@@ -69,13 +75,13 @@ class _TambahBudgetPageState extends State<MyBudgetFormPage> {
                     // Menambahkan behavior saat nama diketik
                     onChanged: (String? value) {
                       setState(() {
-                        _judul = value!;
+                        judul = value!;
                       });
                     },
                     // Menambahkan behavior saat data disimpan
                     onSaved: (String? value) {
                       setState(() {
-                        _judul = value!;
+                        judul = value!;
                       });
                     },
                     // Validator sebagai validasi form
@@ -92,7 +98,7 @@ class _TambahBudgetPageState extends State<MyBudgetFormPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     decoration: InputDecoration(
-                      hintText: "20000",
+                      hintText: "10000",
                       labelText: "Nominal",
                       // Menambahkan circular border agar lebih rapi
                       border: OutlineInputBorder(
@@ -129,21 +135,20 @@ class _TambahBudgetPageState extends State<MyBudgetFormPage> {
                   ),
                 ),
                 ListTile(
-                  title: Text(date.toString()),
-                  // make date to center
+                  title: Text(tanggal.toString()),
+                  // make tanggal to center
                   trailing: const Icon(Icons.keyboard_arrow_down),
                   onTap: () async {
                     final DateTime? picked = await showDatePicker(
                       context: context,
-                      initialDate: date,
+                      initialDate: tanggal,
                       firstDate: DateTime(2015, 8),
                       lastDate: DateTime(2101),
                     );
-                    if (picked != null && picked != date) {
+                    if (picked != null && picked != tanggal)
                       setState(() {
-                        date = picked;
+                        tanggal = picked;
                       });
-                    }
                   },
 
                 ),
@@ -162,9 +167,9 @@ class _TambahBudgetPageState extends State<MyBudgetFormPage> {
                         jenisBudget = newValue!;
                       });
                     },
-                    hint: const SizedBox(
+                    hint: Container(
                       width: 150, //and here
-                      child: Text(
+                      child: const Text(
                         "Pilih Jenis",
                         style: TextStyle(color: Colors.grey),
                         textAlign: TextAlign.center,
@@ -191,22 +196,24 @@ class _TambahBudgetPageState extends State<MyBudgetFormPage> {
                                   borderRadius: BorderRadius.circular(10),
                                 ),
                                 elevation: 15,
-                                child: ListView(
-                                  padding: const EdgeInsets.only(
-                                      top: 20, bottom: 20),
-                                  shrinkWrap: true,
-                                  children: <Widget>[
-                                    const Center(
-                                        child: Text(
-                                            'Pilih Jenis tidak boleh kosong')),
-                                    const SizedBox(height: 20),
-                                    TextButton(
-                                      onPressed: () {
-                                        Navigator.pop(context);
-                                      },
-                                      child: const Text('Kembali'),
-                                    ),
-                                  ],
+                                child: Container(
+                                  child: ListView(
+                                    padding: const EdgeInsets.only(
+                                        top: 20, bottom: 20),
+                                    shrinkWrap: true,
+                                    children: <Widget>[
+                                      const Center(
+                                          child: Text(
+                                              'Pilih Jenis tidak boleh kosong')),
+                                      const SizedBox(height: 20),
+                                      TextButton(
+                                        onPressed: () {
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Text('Kembali'),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               );
                             },
@@ -224,14 +231,9 @@ class _TambahBudgetPageState extends State<MyBudgetFormPage> {
                 ),
               ],
             ),
-
           ),
         ),
       ),
-
-      
     );
   }
 }
-
-// Asyncrhonus adalah proses yang berjalan secara paralel dengan proses lainnya

@@ -68,3 +68,29 @@ Navigator adalah sebuah widget yang mengatur pergantian route halaman yaitu deng
    - Memberi key pada form agar bisa diakses sebagai static
 4. Membuat data.dart untuk menampilkan hasil yang sudah dibuat di form_budget
 5. add-commit-push ke repositori di github
+
+
+# Tugas 9
+
+# Jawab Pertanyaan
+
+### Apakah bisa kita melakukan pengambilan data JSON tanpa membuat model terlebih dahulu? Jika iya, apakah hal tersebut lebih baik daripada membuat model sebelum melakukan pengambilan data JSON?
+Tentu saja kita dapat mengambil data JSON tanpa membuat model terlebih dahulu. Akan tetapi, hal ini tidak disarankan karena kita tidak akan tahu apakah nanti akan ada fields yang hilang atau fields menjadi tidak seperti yang kita harapkan. Akan lebih sulit untuk mengelolanya dan rawan kesalahan. Meskipun demikian, jelas bahwa itu tidak lebih baik daripada membuat model terlebih dahulu.
+
+### Sebutkan widget apa saja yang kamu pakai di proyek kali ini dan jelaskan fungsinya.
+Kurang lebih sama seperti tugas 8 kemarin, tetapi ada tambahan seperti:
+TextButton: membuat button
+FutureBuilder: menampilkan data yang diambil dari API
+ListTile: sebuah row yang menampung teks sebagai leading dan trailing
+Checkbox: membuat checkbox
+
+### Jelaskan mekanisme pengambilan data dari json hingga dapat ditampilkan pada Flutter.
+Pertama, data akan diambil menggunakan HTTP dalam fungsi 'fetchWatchlist' lalu memanggil fungsi get dengan instance HTTP. Kedua, fungsi akan mengembalikan daftar objek 'MyWatchlist'. Ketiga, 'FutureBuilder' akan memanggil fungsi dan menunggu responsnya. Keempat, ketika data diambil, 'FutureBuilder' akan mengembalikan 'ListView.builder' yang membangun 'ListTiles' yang berisi data yang dipetakan yang didapatkan dari fungsi 'fetchWatchlist'.
+
+### Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas.
+1. Membuat file 'mywatchlist.dart' dan membuat kelas 'MyWatchlist'.
+2. Membuat file 'fetch_watchlist.dart' dan yang didalamnya ada fungsi untuk mengambil data dari API.
+3. Membuat file 'watchlist.dart' dan membuat 'MyWatchlistPage StatefulWidget' yang berisi 'FutureBuilder' yang mengambil data menggunakan fungsi 'fetchWatchlist'.
+4. Membuat 'watchlist_detail.dart' dan membuat 'MyWatchlistDetailPage StatelessWidget' yang menampilkan data yang akan diteruskan dari 'MyWatchlistPage'.
+5. Meneruskan data dari 'MyWatchlistPage' ke 'MyWatchlistDetailPage' menggunakan 'Navigator.push'
+6. Membuat widget 'CheckBox' dan fungsi 'onChanged' untuk menampilkan checkbox tercentang jika status true dan tidak jika false. Lalu menambahkan warna outline pada setiap mywatchlist berdasarkan status ditonton dan me-refactor function fetch data dari web service ke sebuah file terpisah sebagai nilai bonus.
